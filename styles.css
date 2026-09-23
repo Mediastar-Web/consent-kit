@@ -1,0 +1,36 @@
+/* @mediastar/consent — import once from the site's global CSS entrypoint:
+     @import "@mediastar/consent/styles.css";
+
+   c15t ships its styles in `@layer components`. The layer order is declared here, base first, so
+   that a site's element resets in `@layer base` (Tailwind v4's preflight is one) sit UNDER them.
+   A site with its own UNLAYERED `button { font: inherit; color: inherit }` reset still beats c15t
+   (unlayered CSS always wins over layered): wrap such resets in `@layer base { … }`. See README. */
+@layer base, components;
+@import "@c15t/nextjs/styles.css";
+
+/* c15t's buttons assume a transparent start, as Tailwind's preflight gives them: its ghost variant
+   sets no background, and without a preflight shows the browser's grey. In `base`, so every c15t
+   variant that paints a background still wins. */
+@layer base {
+  [class*="c15t-ui-button"] {
+    background: transparent;
+  }
+}
+
+/* The preferences dialog's "Salva le scelte" comes out of c15t 2.2 with no mode class at all: a
+   hairline outline on the dialog's own ground, in c15t's own tokens. */
+[data-testid="consent-widget-footer-save-button"] {
+  background: transparent;
+  color: var(--c15t-text);
+  box-shadow: inset 0 0 0 1px var(--c15t-border-hover);
+}
+
+[data-testid="consent-widget-footer-save-button"]:hover {
+  background: var(--c15t-surface-hover);
+}
+
+/* c15t focuses the banner card when it opens, for screen readers; a site's :focus-visible ring would
+   frame the whole card. The buttons inside keep theirs. */
+[data-testid="consent-banner-card"]:focus-visible {
+  outline: none;
+}
