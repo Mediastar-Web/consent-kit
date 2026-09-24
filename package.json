@@ -1,7 +1,7 @@
 {
   "name": "@mediastar/consent",
-  "version": "1.0.0",
-  "description": "Banner cookie, GA4 e Microsoft Clarity dietro consenso, e registro centrale dei consensi per i siti Next.js Mediastar. Basato su c15t.",
+  "version": "2.0.0",
+  "description": "Banner cookie, strumenti di statistica e pubblicità dietro consenso, contenuti esterni che aspettano il consenso e registro centrale dei consensi per i siti Next.js Mediastar. Basato su c15t.",
   "license": "MIT",
   "type": "module",
   "sideEffects": [
@@ -20,6 +20,10 @@
     "./server": {
       "types": "./dist/server.d.ts",
       "default": "./dist/server.js"
+    },
+    "./vendors": {
+      "types": "./dist/vendors.d.ts",
+      "default": "./dist/vendors.js"
     },
     "./styles.css": "./styles.css"
   },
