@@ -1,4 +1,4 @@
-/* @mediastar/consent — import once from the site's global CSS entrypoint:
+/* @mediastar/consent: import once from the site's global CSS entrypoint:
      @import "@mediastar/consent/styles.css";
 
    c15t ships its styles in `@layer components`. The layer order is declared here, base first, so
@@ -33,4 +33,71 @@
    frame the whole card. The buttons inside keep theirs. */
 [data-testid="consent-banner-card"]:focus-visible {
   outline: none;
+}
+
+/* The privacy and cookie policy links come in c15t's own blue, whatever the palette: here they take
+   the text colour and an underline, like the links of the page around them. Set on the cards, where
+   the theme's tokens are in scope. */
+[data-testid="consent-banner-card"],
+[data-testid="consent-dialog-card"] {
+  --legal-links-color: var(--c15t-text);
+  --legal-links-focus-color: var(--c15t-text);
+  --legal-links-focus-color-dark: var(--c15t-text);
+  --legal-links-text-decoration: underline;
+}
+
+/* The banner is rebuilt from c15t's parts to add the X (see Banner in src/index.tsx). This wrapper
+   stands in for the stock one, which only sets the width. */
+.mediastar-consent-shell {
+  display: flex;
+  flex-direction: column;
+  width: min(100%, var(--consent-banner-max-width));
+}
+
+/* The X: top right, inside the banner, as the Garante describes it. Quieter than the buttons below
+   it, but a full 2rem target. */
+.mediastar-consent-close {
+  position: absolute;
+  top: 0.625rem;
+  right: 0.625rem;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--c15t-radius-full);
+  background: transparent;
+  color: var(--c15t-text-muted);
+  cursor: pointer;
+}
+
+.mediastar-consent-close:hover {
+  background: var(--c15t-surface-hover);
+  color: var(--c15t-text);
+}
+
+.mediastar-consent-close:focus-visible {
+  outline: 2px solid var(--c15t-primary);
+  outline-offset: 2px;
+}
+
+.mediastar-consent-close svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+/* The card draws a hairline between its parts; the X is not one of them. */
+.mediastar-consent-close + [data-testid="consent-banner-header"] {
+  border-top-width: 0;
+}
+
+/* The title keeps clear of the X. */
+[data-testid="consent-banner-title"] {
+  padding-right: 2rem;
 }
